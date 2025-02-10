@@ -1,0 +1,228 @@
+/* 
+    AetherMon Cosmic Theme Styles
+    Features: Animated starfield, holographic effects, cyberpunk typography
+*/
+
+:root {
+    /* Cosmic Color Palette */
+    --aether-primary: #6C5B7B; /* Mystic Purple */
+    --aether-secondary: #4B8BBE; /* Stellar Blue */
+    --aether-accent: #F67280; /* Nebula Pink */
+    --aether-dark: #1a1a2e; /* Deep Space */
+    --aether-light: rgba(255, 255, 255, 0.1); /* Stardust */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Base Styles */
+body {
+    font-family: 'Space Mono', monospace;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto; /* Grow and shrink, but don't shrink below content */
+    padding-bottom: 60px; /* Prevent footer overlap */
+}
+
+.aether-footer {
+    flex-shrink: 0; /* Prevent footer shrinking */
+    margin-top: auto; /* Push to bottom */
+    width: 100%;
+    /* Keep existing footer styles */
+    background-color: #3b4cca;
+    color: #ffde00;
+    padding: 1rem;
+}
+
+/* Footer Link customization */
+.text-cyber {
+    color: #ffde00;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+    .text-cyber:hover {
+        color: #3b4cca;
+        text-shadow: 0 0 10px rgba(255, 222, 0, 0.5);
+    }
+
+/* Animated Starfield Background */
+.stars-bg {
+    background: linear-gradient(180deg, var(--aether-dark) 0%, #16213e 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="1" fill="white"/></svg>');
+    background-size: cover, 2px 2px;
+    animation: stars 3s linear ;
+}
+
+@keyframes stars {
+    from {
+        background-position: 0 0, 0 0;
+    }
+
+    to {
+        background-position: 0 100vh, 0 1000px;
+    }
+}
+
+/* Holographic Navigation */
+.aether-nav {
+    background: rgba(28, 37, 65, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--aether-secondary) !important;
+}
+
+.glow {
+    text-shadow: 0 0 10px var(--aether-secondary);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Pokémon Card Styles */
+.aether-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--aether-secondary);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+    .aether-card:hover {
+        box-shadow: 0 0 25px var(--aether-primary);
+        transform: translateY(-5px);
+    }
+
+/* Animated Sprites */
+.aether-sprite {
+    transition: transform 0.3s ease;
+    background: radial-gradient(circle, var(--aether-light) 0%, transparent 70%);
+}
+
+    .aether-sprite:hover {
+        animation: sprite-float 1s ease-in-out infinite;
+    }
+
+@keyframes sprite-float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Cyberpunk Typography */
+.cyber-text {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--aether-accent);
+    text-shadow: 0 0 10px rgba(246, 114, 128, 0.5);
+}
+
+/* Quantum Loader Animation */
+.quantum-loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.particle-ring {
+    width: 80px;
+    height: 80px;
+    border: 3px solid var(--aether-secondary);
+    border-radius: 50%;
+    animation: particle-spin 2s linear infinite;
+}
+
+@keyframes particle-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Privacy page styles */
+.aether-policy {
+    min-height: 70vh;
+}
+
+.policy-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.text-stellar {
+    color: #4B8BBE;
+    font-family: 'Space Mono', monospace;
+}
+
+/* Improved button visibility */
+.btn-aether {
+    background-color: #ffde00; /* Brighter yellow */
+    color: #3b4cca !important; /* Higher contrast blue */
+    border: 2px solid #3b4cca;
+    box-shadow: 0 0 15px rgba(255, 222, 0, 0.3); /* Glow effect */
+    transition: all 0.3s ease;
+}
+
+    .btn-aether:hover {
+        background-color: #ffeb3b;
+        transform: scale(1.05); /*Hover: 5% scale-up + intensified glow*/
+        box-shadow: 0 0 25px rgba(255, 222, 0, 0.5);
+    }
+
+/* Optional: Animated gradient - NOT Used right now */
+.btn-quantum {
+    background: linear-gradient( 45deg, #ffde00 0%, #f67280 50%, #4B8BBE 100% );
+    background-size: 400% 400%;
+    animation: quantum-glow 4s ease infinite;
+}
+
+@keyframes quantum-glow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+/*Optional End*/
+
+/*NULL HANDLING*/
+.type-unknown {
+    background-color: #666 !important;
+    color: white !important;
+}
+
+.stat-label::first-letter {
+    text-transform: uppercase;
+}
+
+.unknown-stat {
+    background-color: #666;
+    color: white;
+}
+
+.pokemon-image {
+    background: url('/images/unknown-pokemon.png') no-repeat center;
+    background-size: contain;
+}

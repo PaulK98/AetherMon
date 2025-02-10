@@ -1,0 +1,37 @@
+﻿@page
+@using AetherMon.Services
+@model AetherMon.Pages.FavoritesModel
+
+<div class="container mt-5">
+    <h1 class="cyber-text">Quantum Archive</h1>
+
+    @if (Model.CapturedPokemon.Any())
+    {
+        <div class="row">
+            @foreach (var pokemon in Model.CapturedPokemon)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="aether-card">
+                        <img src="@SpriteService.GetOfficialArtwork(pokemon.PokemonId)"
+                             class="img-fluid"
+                             alt="@pokemon.Name">
+                        <h3>@pokemon.Name</h3>
+                        <p>Captured: @pokemon.CaptureTime.ToString("MMM dd, yyy")</p>
+                        <!--Delete button-->
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@pokemon.Id">
+                            <button type="submit" class="btn btn-danger btn-sm mt-2">
+                                <i class="fas fa-trash"></i> Release Pokémon
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <p>The Aether Matrix is empty!</p>
+        </div>
+    }
+</div>

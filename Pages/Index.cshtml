@@ -1,0 +1,121 @@
+﻿@page
+@using AetherMon.Services
+
+@model AetherMon.Pages.IndexModel
+@{
+    ViewData["Title"] = "Aether Scanner";
+}
+
+<div class="container mt-5">
+    <!-- Scanner Interface -->
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="post" asp-page-handler="Scan" class="mb-4">
+                <div class="input-group">
+                    <input type="text" class="form-control cyber-input"
+                           asp-for="ScanQuery"
+                           placeholder="Enter Pokémon identifier...">
+                    <button type="submit" class="btn btn-aether">
+                        <i class="fas fa-satellite-dish"></i> Initiate Scan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scan Results -->
+    @if (Model.ScannedPokemon != null)
+    {
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="aether-card p-4 text-center">
+                    <div class="sprite-container mb-3">
+                        <!-- Validation image -->
+                        @if (Model.ScannedPokemon.Id != 0 && Model.ScannedPokemon.Id <= 1025)
+                        {
+                            <img src="@SpriteService.GetOfficialArtwork(Model.ScannedPokemon.Id)"
+                                 class="aether-sprite img-fluid"
+                                 data-animated-src="@SpriteService.GetAnimatedSprite(Model.ScannedPokemon.Id)"
+                                 alt="@Model.ScannedPokemon.Name">
+                        }
+                        else
+                        {
+                            <div class="pokemon-image"></div>
+                        }
+                        
+                    </div>
+
+                    <h3 class="cyber-text mb-3">@Model.ScannedPokemon.Name</h3>
+                    <!-- Details Start -->
+                    <div class="pokemon-details mt-3">
+                        <!-- Types -->
+                        <div class="type-badges mb-2">
+                            @if (Model.ScannedPokemon.Types?.Any() == true)
+                            {
+                                @foreach (var type in Model.ScannedPokemon.Types.OrderBy(t => t.Slot))
+                                {
+                                    <span class="badge type-@type.Type.Name.ToLower()">
+                                        @type.Type.Name.ToUpper()
+                                    </span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="badge type-unknown">UNKNOWN</span>
+                            }
+                        </div>
+                        <!-- Abilities -->
+                        <div class="abilities">
+                            <h5>Abilities</h5>
+                            <ul class="list-unstyled">
+                                @foreach (var ability in Model.ScannedPokemon.Abilities)
+                                {
+                                    <li>
+                                        @(ability.AbilityInfo?.Name ?? "Unknown Ability")
+                                        @if (ability.IsHidden)
+                                        {
+                                            <span class="badge bg-warning">Hidden</span>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <!-- Stats -->
+                        <div class="stats">
+                            <h5>Base Stats</h5>
+                            <div class="stat-bars">
+                                @foreach (var stat in Model.ScannedPokemon.Stats)
+                                {
+                                    <div class="stat-row mb-2">
+                                        <div class="stat-label">@(stat.StatInfo?.Name ?? "Unknown Stat")</div>
+                                        <div class="progress">
+                                            <div class="progress-bar"
+                                                 role="progressbar"
+                                                 style="width: @(stat.BaseStat * 100 / 255)%"
+                                                 aria-valuenow="@stat.BaseStat"
+                                                 aria-valuemin="0"
+                                                 aria-valuemax="255">
+                                                @stat.BaseStat
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Details End -->
+                    <!-- Capture Pokemon -->
+                    <form method="post" asp-page-handler="Capture">
+                        <input type="hidden" name="pokemonId" value="@Model.ScannedPokemon.Id" />
+                        <input type="hidden" name="pokemonName" value="@Model.ScannedPokemon.Name" />
+                        <input type="hidden" name="apiUrl" value="@Model.ScannedPokemon.Url" />
+
+                        <button type="submit" class="btn btn-aether">
+                            <i class="fas fa-atom"></i> Quantum Capture
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>
